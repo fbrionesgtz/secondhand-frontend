@@ -1,0 +1,61 @@
+.sideBar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 300ms ease-in-out;
+    background-color: #333;
+    width: 15%;
+    height: 100vh;
+    padding-block: 0.25rem;
+    color: white;
+    font-size: 0.85em;
+}
+
+.btnX {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    margin: 7% 4%;
+    stroke-width: 0.05;
+    font-size: 2.5em;
+    color: white;
+    transform: rotate(45deg);
+}
+
+.btnArrowForward {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    transform: translateX(0);
+    height: 1rem;
+    margin-top: 1.3rem;
+    padding: 0.5rem;
+    color: white;
+    transition: transform 300ms ease-in-out;
+    background-color: #2d2d2d;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.btnThreeDots {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 8% 8%;
+    stroke-width: 0.05;
+    font-size: 1.5em;
+    color: white;
+}
+
+.logo {
+    position: absolute;
+    bottom: -1%;
+    left: 0;
+}
+
+@media only screen and (max-width: 1700px) {
+    .sidebar {
+        font-size: 0.8em;
+    }
+}

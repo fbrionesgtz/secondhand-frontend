@@ -1,0 +1,13 @@
+.productImg {
+    width: 20rem;
+    height: 20rem;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}

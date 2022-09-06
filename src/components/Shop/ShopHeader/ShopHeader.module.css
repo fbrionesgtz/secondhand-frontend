@@ -1,0 +1,94 @@
+.shopHeader {
+    position: fixed;
+    height: 4.5rem;
+    z-index: 500;
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 5px -2px #80808063;
+    background-color: white;
+    transition: all 300ms ease-in-out;
+}
+
+.shopHeader h1 {
+    position: relative;
+    font-size: 1.5em;
+    margin-left: 2rem;
+}
+
+.shopHeader h1::after {
+    content: "";
+    position: absolute;
+    bottom: -0.85em;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #7484db;
+}
+
+.search {
+    position: relative;
+    width: 50%;
+    height: 35px;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.search form {
+    width: 100%;
+    height: 100%;
+    background-color: #eaf0f3;
+    display: block;
+}
+
+.search input {
+    width: 100%;
+    height: 100%;
+    color: #9ca0a1;
+    border: none;
+    background-color: #eaf0f3;
+    margin: auto;
+    display: block;
+    padding-inline: 3rem;
+}
+
+.search input::placeholder {
+    color: #9ca0a1;
+}
+
+.search input:focus {
+    outline-width: 0;
+}
+
+.search svg {
+    position: absolute;
+    top: 23%;
+    left: 1%;
+    background-color: transparent;
+    border: none;    
+    color: #9ca0a1;
+}
+
+.btnMessage {
+    position: absolute;
+    right: 2rem;
+    background-color: #eaf0f3;
+    padding: 1.2rem;
+    border-radius: 50%;
+    font-size: 1.2em;
+}
+
+.messageIcon {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: #6b7070;
+}
+
+.messageIcon svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

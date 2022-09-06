@@ -1,0 +1,10 @@
+.productListGrid {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    grid-template-columns: repeat(6, 15rem);
+    margin: auto;
+    gap: 1.5rem;
+    margin-top: 4.5rem;
+}

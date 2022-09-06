@@ -1,0 +1,10 @@
+.shop {
+    position: fixed;
+    left: 15%;
+    top: 0;
+    width: 85%;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: all 300ms ease-in-out;
+}
