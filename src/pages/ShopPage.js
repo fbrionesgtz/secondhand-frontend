@@ -3,14 +3,7 @@ import Shop from "../components/Shop/Shop";
 import SideBar from "../components/SideBar/SideBar";
 
 const ShopPage = (props) => {
-  const [showSideBar, setShowSideBar] = useState(true);
   const [filters, setFilters] = useState();
-
-  const handleToggleSideBar = () => {
-    setShowSideBar((prevState) => {
-      return !prevState;
-    });
-  };
 
   const handleAddFilter = (filter) => {
     if (!filters) {
@@ -20,22 +13,18 @@ const ShopPage = (props) => {
     }
   };
 
-  const renderProducts = () => {
-    if (!filters) {
-      return props.products;
-    }
-    for (const product in props.products) {
-    }
-  };
+  // const renderProducts = () => {
+  //   if (!filters) {
+  //     return props.products;
+  //   }
+  //   for (const product in props.products) {
+  //   }
+  // };
 
   return (
     <Fragment>
-      <SideBar
-        showSideBar={showSideBar}
-        onToggleSideBar={handleToggleSideBar}
-        onAddFilter={handleAddFilter}
-      />
-      <Shop products={props.products} showSideBar={showSideBar} />
+      <SideBar onAddFilter={handleAddFilter} />
+      <Shop isLoading={props.isLoading} error={props.error} />
     </Fragment>
   );
 };

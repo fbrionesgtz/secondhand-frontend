@@ -1,9 +1,13 @@
 import ProductForm from "../components/Products/ProductForm/ProductForm";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { productActions } from "../store/product-slice";
 import useHttp from "../hooks/use-http";
 
-const EditProductPage = (props) => {
+const EditProductPage = () => {
   const { sendRequest } = useHttp();
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { productId } = useParams();
@@ -14,23 +18,22 @@ const EditProductPage = (props) => {
     formData.append("category", product.category);
     formData.append("price", product.price);
     formData.append("description", product.description);
-    formData.append("image", product.image);
+    formData.append("image", product.productImage);
 
-    try {
-      const response = await fetch("http://localhost:8080/products", {
+    sendRequest(
+      {
+        url: "http://localhost:8080/products",
         method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Add product failed");
+        headers: {
+          Authorization: token,
+        },
+        formData: formData,
+      },
+      () => {
+        dispatch(productActions.reloadProducts());
+        navigate("/shop");
       }
-
-      const data = await response.json();
-      navigate("/shop");
-    } catch (err) {
-      console.log(err);
-    }
+    );
   };
 
   const handleUpdatePost = async (product) => {
@@ -39,26 +42,22 @@ const EditProductPage = (props) => {
     formData.append("category", product.category);
     formData.append("price", product.price);
     formData.append("description", product.description);
-    formData.append("image", product.image);
+    formData.append("image", product.productImage);
 
-    try {
-      const response = await fetch(
-        `http://localhost:8080/products/${productId}`,
-        {
-          method: "PUT",
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Update product failed");
+    sendRequest(
+      {
+        url: `http://localhost:8080/products/${productId}`,
+        method: "PUT",
+        headers: {
+          Authorization: token,
+        },
+        formData: formData,
+      },
+      () => {
+        dispatch(productActions.reloadProducts());
+        navigate("/shop");
       }
-
-      const data = await response.json();
-      navigate("/shop");
-    } catch (err) {
-      console.log(err);
-    }
+    );
   };
 
   const handleOnSubmit = (product) => {
@@ -69,7 +68,12 @@ const EditProductPage = (props) => {
     }
   };
 
-  return <ProductForm onSubmit={handleOnSubmit} productId={productId} />;
+  return (
+    <ProductForm
+      onSubmit={handleOnSubmit}
+      productId={productId ? productId : null}
+    />
+  );
 };
 
 export default EditProductPage;

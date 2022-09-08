@@ -1,20 +1,27 @@
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import useHttp from "../../../hooks/use-http";
 
 const ProductForm = (props) => {
   const { sendRequest } = useHttp();
+  const token = useSelector((state) => state.auth.token);
   const [productToUpdate, setProductToUpdate] = useState({});
   const titleRef = useRef();
   const priceRef = useRef();
   const categoryRef = useRef();
-  const [image, setImage] = useState();
+  const [productImage, setProductImage] = useState();
   const descriptionRef = useRef();
   const productId = props.productId;
 
   useEffect(() => {
     if (productId) {
       sendRequest(
-        { url: `http://localhost:8080/products/${productId}` },
+        {
+          url: `http://localhost:8080/products/${productId}`,
+          headers: {
+            Authorization: token,
+          },
+        },
         (data) => {
           setProductToUpdate(data.product);
         }
@@ -30,20 +37,20 @@ const ProductForm = (props) => {
       price: priceRef.current.value,
       category: categoryRef.current.value,
       description: descriptionRef.current.value,
-      image: image,
+      productImage: productImage,
     };
 
     props.onSubmit(product);
   };
 
-  const handleImageChange = (e) => {
+  const handleProductImageChange = (e) => {
     if (!productId && e.target.files) {
-      setImage(e.target.files[0]);
+      setProductImage(e.target.files[0]);
     } else if (productId && !e.target.files) {
-      setImage(productToUpdate.image);
+      setProductImage(productToUpdate.productImage);
     } else if (productId && e.target.files) {
       console.log(e.target.files);
-      setImage(e.target.files[0]);
+      setProductImage(e.target.files[0]);
     }
   };
 
@@ -92,8 +99,7 @@ const ProductForm = (props) => {
         type="file"
         id="image"
         name="image"
-        onChange={handleImageChange}
-        placeholder="Enter image"
+        onChange={handleProductImageChange}
       />
       <textarea
         id="description"

@@ -11,7 +11,7 @@ const Product = (props) => {
         <div
           className={styles.img}
           style={{
-            backgroundImage: `url(http://localhost:8080/${props.image})`,
+            backgroundImage: `url(http://localhost:8080/${props.productImage})`,
           }}
         />
       </div>

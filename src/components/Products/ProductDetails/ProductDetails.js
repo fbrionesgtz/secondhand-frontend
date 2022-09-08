@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import useHttp from "../../../hooks/use-http";
 import styles from "./ProductDetails.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ProductDetails = (props) => {
   const { sendRequest } = useHttp();
+  const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
 
   useEffect(() => {
     if (props.productId && !product._id) {
       sendRequest(
-        { url: `http://localhost:8080/products/${props.productId}` },
+        {
+          url: `http://localhost:8080/products/${props.productId}`,
+          headers: {
+            Authorization: token,
+          },
+        },
         (data) => {
           setProduct(data.product);
         }
@@ -24,6 +31,9 @@ const ProductDetails = (props) => {
       {
         url: `http://localhost:8080/products/${productId}`,
         method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
       },
       () => {
         navigate("/shop");
@@ -38,7 +48,7 @@ const ProductDetails = (props) => {
         <div
           className={styles.img}
           style={{
-            backgroundImage: `url(http://localhost:8080/${product.image})`,
+            backgroundImage: `url(http://localhost:8080/${product.productImage})`,
           }}
         />
       </div>

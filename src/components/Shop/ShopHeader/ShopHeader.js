@@ -1,8 +1,10 @@
+import { useSelector } from "react-redux";
 import styles from "./ShopHeader.module.css";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdMessage } from "react-icons/md";
 
 const ShopHeader = (props) => {
+  const showSideBar = useSelector((state) => state.ui.isSideBarShown);
   const hanldeSearch = (e) => {
     props.onSearch(e.target.value);
   };
@@ -10,7 +12,7 @@ const ShopHeader = (props) => {
   return (
     <div
       className={styles.shopHeader}
-      style={!props.showSideBar ? { width: "100%" } : {}}
+      style={!showSideBar ? { width: "100%" } : {}}
     >
       <div className={styles.search}>
         <input
