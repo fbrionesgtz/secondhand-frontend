@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "./store/product-slice";
+import { userActions } from "./store/user-slice";
 import useHttp from "./hooks/use-http";
 import ShopPage from "./pages/ShopPage";
 import EditProductPage from "./pages/EditProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
-import SignUpForm from "./components/Auth/SignUp/SignUpForm";
-import LogInForm from "./components/Auth/LogIn/LogInForm";
+import SignUpPage from "./pages/SignUpPage";
+import UserProductsPage from "./pages/UserProductsPage";
+import LogInPage from "./pages/LogInPage";
+import { authActions } from "./store/auth-slice";
+import UserDetailsPage from "./pages/UserDetailsPage";
 
 function App() {
   const { sendRequest, isLoading, error } = useHttp();
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const navigate = useNavigate();
   const reloadProducts = useSelector((state) => state.product.reloadProducts);
   const token = useSelector((state) => state.auth.token);
 
@@ -30,25 +34,45 @@ function App() {
         });
       }
 
-      dispatch(productActions.setProducts(transformedProducts));
+      return transformedProducts;
     };
 
     if (token) {
       sendRequest(
         {
-          url: "http://localhost:8080/products",
+          url: "http://localhost:8080/auth/user",
           headers: { Authorization: token },
         },
-        transformProducts
+        (data) => {
+          dispatch(userActions.setUser(data.user));
+          sendRequest(
+            {
+              url: "http://localhost:8080/products",
+              headers: { Authorization: token },
+            },
+            (products) => {
+              dispatch(productActions.setProducts(transformProducts(products)));
+            }
+          );
+        }
       );
+
+      if (error) {
+        navigate("/auth/login");
+        console.log("your session expired");
+      }
+    } else {
+      navigate("/");
+      console.log("you must login");
     }
-  }, [sendRequest, reloadProducts]);
+  }, [sendRequest, reloadProducts, token]);
 
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/auth/signup" element={<SignUpForm />} />
-      <Route path="/auth/login" element={<LogInForm />} />
+      <Route path="/auth/signup" element={<SignUpPage />} />
+      <Route path="/auth/login" element={<LogInPage />} />
+      <Route path="/user" element={<UserDetailsPage />} />
       <Route path="/shop/:productId" element={<ProductDetailsPage />} />
       <Route
         path="/shop"
@@ -56,6 +80,7 @@ function App() {
       />
       <Route path="/add-product" element={<EditProductPage />} />
       <Route path="/update-product/:productId" element={<EditProductPage />} />
+      <Route path="/user-products" element={<UserProductsPage />} />
     </Routes>
   );
 }

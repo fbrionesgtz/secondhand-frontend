@@ -1,0 +1,46 @@
+.form {
+    padding: 1rem;
+}
+
+.form h1 {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+}
+
+.form a {
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.control input {
+    color: #9ca0a1;
+    border: 1px solid #9ca0a1;
+    width: calc(100% - 4rem);
+    background-color: transparent;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.8rem;
+    border-radius: 10px;
+}
+
+.control input::placeholder {
+    color: #9ca0a1;
+}
+
+.control input:focus {
+    outline-width: 0;
+}
+  
+.block {
+    display: inline-block;
+}
+
+.alignEnd {
+    float: right;
+}
+
+@media only screen and (max-height: 700px) {
+    .control input {
+        margin-bottom: 1.2rem;
+    }
+}

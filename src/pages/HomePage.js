@@ -1,22 +1,11 @@
-import { Fragment, useState } from "react";
-import SideBar from "../components/SideBar/SideBar";
+import Home from "../components/Home/Home";
+import GrayBackground from "../components/UI/Background/GrayBackground";
 
 const HomePage = () => {
-  const [showSideBar, setShowSideBar] = useState(true);
-
-  const handleToggleSideBar = () => {
-    setShowSideBar((prevState) => {
-      return !prevState;
-    });
-  };
-
   return (
-    <Fragment>
-      <SideBar
-        showSideBar={showSideBar}
-        onToggleSideBar={handleToggleSideBar}
-      />
-    </Fragment>
+    <GrayBackground>
+      <Home />
+    </GrayBackground>
   );
 };
 

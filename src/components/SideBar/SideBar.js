@@ -1,16 +1,17 @@
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navigation from "./Navigation/Navigation";
+import SecondhandLogo from "../UI/Logo/SecondhandLogo";
 import { uiActions } from "../../store/ui-slice";
 import { Transition } from "react-transition-group";
 import styles from "./SideBar.module.css";
-import Navigation from "./Navigation/Navigation";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { BiPlus } from "react-icons/bi";
 
 const SideBar = (props) => {
-  const [isOpen, setIsOpen] = useState(true);
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
+  // const [isOpen, setIsOpen] = useState();
   const dispatch = useDispatch();
   const transitionStyles = {
     entered: { transform: "translateX(0)" },
@@ -27,8 +28,8 @@ const SideBar = (props) => {
 
   return (
     <Fragment>
-      {!isOpen && (
-        <Transition in={!isOpen} timeout={0}>
+      {!showSideBar && (
+        <Transition in={!showSideBar} timeout={300}>
           {(state) => (
             <div
               className={styles.btnArrowForward}
@@ -39,16 +40,7 @@ const SideBar = (props) => {
           )}
         </Transition>
       )}
-      <Transition
-        in={showSideBar}
-        timeout={0}
-        onEntered={() => {
-          setIsOpen(true);
-        }}
-        onExited={() => {
-          setIsOpen(false);
-        }}
-      >
+      <Transition in={showSideBar} timeout={0}>
         {(state) => (
           <section
             className={styles.sideBar}
@@ -57,9 +49,8 @@ const SideBar = (props) => {
             <BiPlus className={styles.btnX} onClick={handleHideSideBar} />
             <Navigation onAddFilter={props.onAddFilter} />
             <div className={styles.logo}>
-              <img src="" height="110%" width="110%" />
+              <SecondhandLogo />
             </div>
-            <BsThreeDots className={styles.btnThreeDots} />
           </section>
         )}
       </Transition>

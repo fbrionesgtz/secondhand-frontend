@@ -1,0 +1,18 @@
+.secondhandLogo {
+    position: relative;
+    width: fit-content;
+    color: #00cd8a;
+}
+
+.secondhandLogo svg {
+    font-size: 1.7em;
+}
+
+.secondhandLogo svg:first-child {
+    position: absolute;
+    font-size: 1em;
+    top: -15px;
+    left: 50%;
+    transform: translate(-50%);
+    
+}

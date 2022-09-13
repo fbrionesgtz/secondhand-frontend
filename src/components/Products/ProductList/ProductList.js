@@ -8,6 +8,20 @@ const ProductList = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
   const products = useSelector((state) => state.product.products);
   const navigate = useNavigate();
+  let screenWidth = window.innerWidth;
+
+  const gridStyles =
+    screenWidth <= 1900 && screenWidth > 1830
+      ? "repeat(7, 15rem)"
+      : screenWidth <= 1830 && screenWidth > 1500
+      ? "repeat(6, 15rem)"
+      : screenWidth <= 1500 && screenWidth > 1300
+      ? "repeat(5, 15rem)"
+      : screenWidth <= 1300 && screenWidth > 1190
+      ? "repeat(4, 15rem)"
+      : screenWidth <= 1190 && screenWidth > 760
+      ? "repeat(2, 15rem)"
+      : "repeat(1, 15rem)";
 
   const handleProductClick = (prodId) => {
     navigate(`/shop/${prodId}`);
@@ -16,7 +30,7 @@ const ProductList = (props) => {
   return (
     <div
       className={styles.productListGrid}
-      style={!showSideBar ? { gridTemplateColumns: "repeat(7, 15rem)" } : {}}
+      style={!showSideBar ? { gridTemplateColumns: `${gridStyles}` } : {}}
     >
       {props.error && <p>Something went wrong</p>}
       {props.isLoading && <VscLoading className={styles.loader} />}

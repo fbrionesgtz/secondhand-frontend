@@ -24,3 +24,27 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+@media only screen and (max-width: 1830px) {
+    .productListGrid { 
+    grid-template-columns: repeat(5, 15rem);
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .productListGrid { 
+    grid-template-columns: repeat(4, 15rem);
+    }
+}
+
+@media only screen and (max-width: 1190px) {
+    .productListGrid { 
+    grid-template-columns: repeat(3, 15rem);
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .productListGrid { 
+    grid-template-columns: repeat(2, 15rem);
+    }
+}

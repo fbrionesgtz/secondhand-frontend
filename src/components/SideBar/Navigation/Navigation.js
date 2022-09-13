@@ -1,17 +1,18 @@
 import User from "../User/User";
 import { Link } from "react-router-dom";
 import styles from "./Navigation.module.css";
-import { BsPersonFill, BsPlayCircle } from "react-icons/bs";
-import { BiTargetLock } from "react-icons/bi";
+import { BsTagFill } from "react-icons/bs";
+import { TbHanger } from "react-icons/tb";
 import {
-  MdOutlineBusiness,
-  MdOutlineDoubleArrow,
-  MdEmail,
-  MdInsertChart,
-  MdOutlineLockOpen,
+  MdDirectionsCar,
+  MdOutlineDevices,
+  MdPets,
+  MdSportsSoccer,
 } from "react-icons/md";
-import { IoMdBriefcase } from "react-icons/io";
-import { RiTaskFill } from "react-icons/ri";
+import { IoHome } from "react-icons/io5";
+import { CgGames } from "react-icons/cg";
+import { GiForestCamp } from "react-icons/gi";
+import { IoMdPricetags, IoMdPricetag } from "react-icons/io";
 
 const Nav = (props) => {
   const handleAddFilter = (filter) => {
@@ -24,17 +25,15 @@ const Nav = (props) => {
         <li className={styles.separator}>
           <User />
         </li>
-        <li>
-          <Link to="#">My Products</Link>
-        </li>
         <li className={styles.separator}>
+          <IoMdPricetags />
           <Link to="/add-product">Add Product</Link>
         </li>
         <li className={styles.title}>
           <p>Categories</p>
         </li>
         <li>
-          <BiTargetLock />
+          <MdDirectionsCar />
           <Link
             to="#"
             onClick={handleAddFilter.bind(null, { category: "Vehicle" })}
@@ -43,31 +42,31 @@ const Nav = (props) => {
           </Link>
         </li>
         <li className={styles.active}>
-          <BsPersonFill />
+          <TbHanger />
           <a href="#">Clothing</a>
         </li>
         <li>
-          <MdOutlineBusiness />
+          <MdOutlineDevices />
           <a href="#">Electronics</a>
         </li>
         <li>
-          <MdOutlineDoubleArrow />
+          <IoHome />
           <a href="#">Home Goods</a>
         </li>
         <li>
-          <IoMdBriefcase />
+          <CgGames />
           <a href="#">Toys & Games</a>
         </li>
         <li>
-          <RiTaskFill />
+          <MdPets />
           <a href="#">Pet Supplies</a>
         </li>
         <li>
-          <BsPlayCircle />
+          <MdSportsSoccer />
           <a href="#">Sports Supplies</a>
         </li>
         <li>
-          <BsPlayCircle />
+          <GiForestCamp />
           <a href="#">Outdoors</a>
         </li>
       </ul>

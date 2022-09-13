@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
+import Button from "../../UI/Button/Button";
+import styles from "../Form.module.css";
 
 const SignUpForm = () => {
   const { sendRequest } = useHttp();
@@ -44,51 +46,81 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSignUp}>
-      <input
-        type="file"
-        id="image"
-        name="image"
-        onChange={handleProfileImageChange}
-      />
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        ref={firstNameRef}
-        placeholder="Enter first name"
-      />
-      <input
-        type="text"
-        id="lastName"
-        name="lastName"
-        ref={lastNameRef}
-        placeholder="Enter last name"
-      />
-      <input
-        type="phone"
-        id="phoneNumber"
-        name="phoneNumber"
-        ref={phoneRef}
-        placeholder="Enter phone number"
-      />
-      <input
-        type="email"
-        id="email"
-        name="email"
-        ref={emailRef}
-        placeholder="Enter email"
-      />
-      <input
-        type="password"
-        id="password"
-        name="password"
-        ref={passwordRef}
-        placeholder="Enter password"
-      />
-
-      <button type="submit">Sign up</button>
-    </form>
+    <div className={styles.form}>
+      <h1>Create an account</h1>
+      <form onSubmit={handleSignUp}>
+        <div className={styles.control}>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleProfileImageChange}
+            className={styles.fileInput}
+          />
+        </div>
+        <div className={`${styles.control} ${styles.block}`}>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            ref={firstNameRef}
+            placeholder="Enter first name"
+          />
+        </div>
+        <div className={`${styles.control} ${styles.alignEnd}`}>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            ref={lastNameRef}
+            placeholder="Enter last name"
+          />
+        </div>
+        <div className={styles.control}>
+          <input
+            type="phone"
+            id="phoneNumber"
+            name="phoneNumber"
+            ref={phoneRef}
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div className={styles.control}>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            ref={emailRef}
+            placeholder="Enter email"
+          />
+        </div>
+        <div className={styles.control}>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ref={passwordRef}
+            placeholder="Enter password"
+          />
+        </div>
+        <div className={styles.control}>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ref={passwordRef}
+            placeholder="Confirm password"
+          />
+        </div>
+        <Button
+          type="submit"
+          class="primary"
+          styles={{ width: "calc(100% - 1rem)" }}
+          content="Sign up"
+        />
+      </form>
+      <Link to="/auth/login">Already have an account</Link>
+    </div>
   );
 };
 
