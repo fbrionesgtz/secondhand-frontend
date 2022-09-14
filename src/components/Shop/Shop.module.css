@@ -1,8 +1,8 @@
 .shop {
     position: fixed;
-    left: 15%;
+    left: 20%;
     top: 0;
-    width: 85%;
+    width: 80%;
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;

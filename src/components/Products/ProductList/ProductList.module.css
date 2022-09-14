@@ -48,3 +48,9 @@
     grid-template-columns: repeat(2, 15rem);
     }
 }
+
+@media only screen and (max-width: 500px) {
+    .productListGrid { 
+    grid-template-columns: repeat(1, 15rem);
+    }
+}

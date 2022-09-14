@@ -26,6 +26,7 @@ function App() {
         transformedProducts.push({
           _id: products["products"][key]._id,
           title: products["products"][key].title,
+          category: products["products"][key].category,
           price: products["products"][key].price,
           description: products["products"][key].description,
           productImage: products["products"][key].productImage,

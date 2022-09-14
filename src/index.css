@@ -13,18 +13,24 @@ body {
 
 ::-webkit-scrollbar {
     width: 10px;
-  }
+}
   
-  ::-webkit-scrollbar-track {
-    margin-top: 4.5rem;
+::-webkit-scrollbar-track {
     background: white; 
-  }
+}
    
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #bcbfbf; 
     border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+::-webkit-scrollbar-thumb:hover {
     background: #abadad; 
-  }
+}
+
+input::-webkit-inner-spin-button, 
+input::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+}

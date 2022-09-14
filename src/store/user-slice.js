@@ -6,6 +6,9 @@ const userSlice = createSlice({
     user: {},
     userProducts: [],
     search: "",
+    filters: {
+      categories: [],
+    },
   },
   reducers: {
     setUser(state, action) {
@@ -16,6 +19,29 @@ const userSlice = createSlice({
     },
     setSearch(state, action) {
       state.search = action.payload;
+    },
+    addFilter(state, action) {
+      if (
+        action.payload.category &&
+        !state.filters.categories.includes(action.payload.category)
+      ) {
+        state.filters.categories = [
+          ...state.filters.categories,
+          action.payload.category,
+        ];
+      }
+    },
+    clearFilter(state, action) {
+      if (action.payload.category) {
+        state.filters.categories = state.filters.categories.filter(
+          (category) => category !== action.payload.category
+        );
+      }
+    },
+    clearAllFilters(state) {
+      state.filters = {
+        categories: [],
+      };
     },
   },
 });

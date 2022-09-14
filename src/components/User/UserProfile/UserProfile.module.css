@@ -9,10 +9,30 @@
     width: 100%;
     height: 60vh;
     background-color: rgb(213, 213, 213);
+    z-index: 100;
 }
 
-.coverImage img {
+.coverImage::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.319);
     width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.coverImage:hover::after {
+    visibility: visible;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 80%;
 }
 
 .coverImage svg {
@@ -22,6 +42,15 @@
     transform: translate(-50%, -50%);
     font-size: 4em;
     color: rgb(117, 117, 117);
+    z-index: 200;
+}
+
+.coverImageInput {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
 
 .user {
@@ -32,22 +61,46 @@
     width: 100%;
 }
 
-.user h1 {
-    position: absolute;
-    font-size: 1.5em;
-    left: 18rem;
-    bottom: 4.5rem;
-    color: #333;
-    display: block;
-}
-
 .profileImage {
     position: absolute;
     left: 2rem;
     bottom: 0;
     width: 15rem;
     height: 15rem;
-    z-index: 999;
+    border: 5px solid white;
+    border-radius: 50%;
+    z-index: 500;
+}
+
+.profileImage::after {
+    position: absolute;
+    content: attr(data-name);
+    bottom: 5rem;
+    left: 15rem;
+    width: fit-content;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: white;
+    color: #333;
+    font-size: 1.3em;
+    font-weight: 900;
+    white-space: nowrap;
+    border-top-right-radius: 20px;
+}
+
+.profileImage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.319);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    visibility: hidden;
+}
+
+.profileImage:hover::before {
+    visibility: visible;
 }
 
 .profileImage img {
@@ -55,41 +108,29 @@
     width: 100%;
 }
 
+.contactIcon {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    color: rgb(117, 117, 117);
+    z-index: 999;
+}
+
 .userContactContainer {
-    position: absolute;
-    bottom: -2rem;
-    left: 18rem;
-    background-color: #333;
-    color: white;
-    width: 11rem;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    padding: 1rem;
 }
 
-.userContactContainer p {
-    padding: 0.5rem;
+.userContactContainer h1{
+    font-size: 1.3em;
     margin: 0;
-    color: white;
-    text-align: center;
-}
-
-.userContact {
-    position: absolute;
-    /* opacity: 0; */
-    background-color: #333;
-
-    color: black!important;
-    bottom: -4.5rem;
-    left: 18rem;
-    padding: 0.5rem;
-    color: white;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 .userContact p {
+    display: inline-block;
     margin: 0;
-    margin-bottom: 0.5rem;
-    text-align: left;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
 }
-

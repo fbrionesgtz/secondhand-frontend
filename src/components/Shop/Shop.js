@@ -7,6 +7,7 @@ const Shop = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
   const products = useSelector((state) => state.product.products);
   const search = useSelector((state) => state.product.search);
+  const filters = useSelector((state) => state.product.filters);
 
   return (
     <section
@@ -17,6 +18,7 @@ const Shop = (props) => {
       <ProductList
         products={products}
         search={search}
+        filters={filters}
         isLoading={props.isLoading}
         error={props.error}
       />

@@ -7,7 +7,7 @@
 
 .nav li {
     display: flex;
-    gap: 0.2rem;
+    gap: 1rem;
     padding-block: 1rem;
     padding-left: 1rem;
     font-size: 1.1em;
@@ -19,15 +19,19 @@
 }
 
 .nav li:hover,
-.nav li:active {
+.active {
     background-color: #334;
     color: #00cd8a;
 }
 
 .nav a {
-    margin-left: 1rem;
     text-decoration: none;
     color: inherit;
+}
+
+.nav p {
+    margin: 0;
+    cursor: pointer;
 }
 
 .nav svg {
@@ -57,6 +61,24 @@
 .title p {
     margin: 0;
     font-weight: 500;
+}
+
+.price {
+    display: grid!important;
+    padding-right: 0.5rem!important;
+    grid-template-columns: 45% 5% 45%;
+    gap: 0.5rem!important;
+    align-items: center;
+    justify-items: center;
+}
+
+.price input {
+    color: #9ca0a1;
+    width: 45%;
+    border: 1px solid #9ca0a1;
+    background-color: #eaf0f3;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
 }
 
 @media only screen and (max-height: 800px) {

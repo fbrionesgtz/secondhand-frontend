@@ -46,10 +46,7 @@ const SideBar = (props) => {
             style={{ ...transitionStyles[state] }}
           >
             <BiPlus className={styles.btnX} onClick={handleHideSideBar} />
-            <Navigation onAddFilter={props.onAddFilter} />
-            <div className={styles.logo}>
-              <SecondhandLogo />
-            </div>
+            <Navigation />
           </section>
         )}
       </Transition>

@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    isSideBarShown: true,
+    isSideBarShown: false,
+    isCoverImageHover: false,
+    isProfileImageHover: false,
     isUserContactShown: false,
   },
   reducers: {
@@ -12,6 +14,18 @@ const uiSlice = createSlice({
     },
     hideSideBar(state) {
       state.isSideBarShown = false;
+    },
+    hoverCoverImage(state) {
+      state.isCoverImageHover = true;
+    },
+    hoverLeaveCoverImage(state) {
+      state.isCoverImageHover = false;
+    },
+    hoverProfileImage(state) {
+      state.isProfileImageHover = true;
+    },
+    hoverLeaveProfileImage(state) {
+      state.isProfileImageHover = false;
     },
     showUserContact(state) {
       state.isUserContactShown = true;

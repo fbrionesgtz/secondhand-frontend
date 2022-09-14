@@ -6,13 +6,14 @@ import useHttp from "../../../hooks/use-http";
 import ProductList from "../../Products/ProductList/ProductList";
 import UserProductsHeader from "./UserProductsHeader/UserProductsHeader";
 
-const UserProducts = (props) => {
-  const search = useSelector((state) => state.user.search);
+const UserProducts = () => {
   const { sendRequest, error } = useHttp();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userProducts = useSelector((state) => state.user.userProducts);
   const token = useSelector((state) => state.auth.token);
+  const search = useSelector((state) => state.user.search);
+  const filters = useSelector((state) => state.user.filters);
 
   useEffect(() => {
     if (token) {
@@ -35,7 +36,7 @@ const UserProducts = (props) => {
   return (
     <section>
       <UserProductsHeader />
-      <ProductList search={search} products={userProducts} />
+      <ProductList search={search} filters={filters} products={userProducts} />
     </section>
   );
 };

@@ -41,9 +41,40 @@ const ProductList = (props) => {
       {props.error && <p>Something went wrong</p>}
       {props.isLoading && <VscLoading className={styles.loader} />}
       {props.products
-        .filter((p) =>
-          p.title.toLowerCase().includes(props.search.toLowerCase())
-        )
+        .filter((p) => {
+          const minPrice = props.filters.priceRange
+            ? props.filters.priceRange.min
+            : null;
+          const maxPrice = props.filters.priceRange
+            ? props.filters.priceRange.max
+            : null;
+          const filterBySearch = p.title
+            .toLowerCase()
+            .includes(props.search.toLowerCase());
+
+          const filterByCategory = props.filters.categories.includes(
+            p.category
+          );
+
+          const filterByPriceRange =
+            minPrice && maxPrice
+              ? p.price >= minPrice && p.price <= maxPrice
+              : minPrice
+              ? p.price >= minPrice
+              : maxPrice && p.price <= maxPrice;
+
+          if (filterBySearch && props.filters.categories.length > 0) {
+            return filterBySearch && filterByCategory;
+          }
+
+          if (minPrice || maxPrice) {
+            return filterByPriceRange;
+          }
+
+          if (filterBySearch && props.filters.categories.length === 0) {
+            return filterBySearch;
+          }
+        })
         .map((p) => (
           <Product
             key={p._id}
@@ -51,6 +82,7 @@ const ProductList = (props) => {
             price={p.price}
             description={p.description}
             productImage={p.productImage}
+            category={p.category}
             onClick={handleProductClick.bind(null, p._id)}
           />
         ))}

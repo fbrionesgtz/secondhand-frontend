@@ -18,6 +18,7 @@ const Product = (props) => {
       <div>
         <p>{`$${props.price}`}</p>
         <h1>{props.title}</h1>
+        <p>{props.category}</p>
       </div>
     </div>
   );
