@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
+import styles from "../../Auth/Form.module.css";
+import Button from "../../UI/Button/Button";
 
 const ProductForm = (props) => {
   const { sendRequest } = useHttp();
+  const location = useLocation();
   const token = useSelector((state) => state.auth.token);
   const [productToUpdate, setProductToUpdate] = useState({});
   const titleRef = useRef();
@@ -55,61 +59,78 @@ const ProductForm = (props) => {
   };
 
   return (
-    <form
-      action="/"
-      method="POST"
-      encType="multipart/form-data"
-      onSubmit={handleSubmit}
-    >
-      <input
-        type="text"
-        id="title"
-        name="title"
-        ref={titleRef}
-        placeholder="Enter title"
-        defaultValue={productId ? productToUpdate.title : null}
-      />
-      <select
-        id="category"
-        name="category"
-        type="select"
-        ref={categoryRef}
-        defaultValue={productId ? productToUpdate.category : null}
+    <div className={styles.form}>
+      <h1>
+        {location.pathname.includes("add")
+          ? "Add Product"
+          : location.pathname.includes("update") && "Update Product"}
+      </h1>
+      <form
+        action="/"
+        method="POST"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
       >
-        <option value="Vehicles">Vehicles</option>
-        <option value="Clothing">Clothing</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Home Goods">Home Goods</option>
-        <option value="Toys & Games">Toys & Games</option>
-        <option value="Pet Supplies">Pet Supplies</option>
-        <option value="Sports Supplies">Sports Supplies</option>
-        <option value="Outdoors">Outdoors</option>
-      </select>
-      <input
-        type="number"
-        min="0"
-        step="0.01"
-        id="price"
-        name="price"
-        ref={priceRef}
-        placeholder="Enter price"
-        defaultValue={productId ? productToUpdate.price : null}
-      />
-      <input
-        type="file"
-        id="image"
-        name="image"
-        onChange={handleProductImageChange}
-      />
-      <textarea
-        id="description"
-        name="description"
-        ref={descriptionRef}
-        placeholder="Enter description"
-        defaultValue={productId ? productToUpdate.description : null}
-      />
-      <button type="submit">Submit</button>
-    </form>
+        <div className={styles.control}>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            ref={titleRef}
+            placeholder="Enter title"
+            defaultValue={productId ? productToUpdate.title : null}
+          />
+        </div>
+        <div className={styles.control}>
+          <select
+            id="category"
+            name="category"
+            type="select"
+            ref={categoryRef}
+            defaultValue={productId ? productToUpdate.category : null}
+          >
+            <option value="Vehicles">Vehicles</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Home Goods">Home Goods</option>
+            <option value="Toys & Games">Toys & Games</option>
+            <option value="Pet Supplies">Pet Supplies</option>
+            <option value="Sports Supplies">Sports Supplies</option>
+            <option value="Outdoors">Outdoors</option>
+          </select>
+        </div>
+        <div className={styles.control}>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            id="price"
+            name="price"
+            ref={priceRef}
+            placeholder="Enter price"
+            defaultValue={productId ? productToUpdate.price : null}
+          />
+        </div>
+        <div className={styles.control}>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleProductImageChange}
+          />
+        </div>
+        <div className={styles.control}>
+          <textarea
+            id="description"
+            name="description"
+            ref={descriptionRef}
+            placeholder="Enter description"
+            defaultValue={productId ? productToUpdate.description : null}
+          />
+        </div>
+        <Button type="submit" class="primary" content="Submit" />
+      </form>
+    </div>
   );
 };
 

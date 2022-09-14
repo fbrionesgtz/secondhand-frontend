@@ -1,12 +1,16 @@
 import { useSelector } from "react-redux";
+import { productActions } from "../../../store/product-slice";
+import { useDispatch } from "react-redux";
+import SearchBar from "../../UI/SearchBar/SearchBar";
 import styles from "./ShopHeader.module.css";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { MdMessage } from "react-icons/md";
 
 const ShopHeader = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
-  const hanldeSearch = (e) => {
-    props.onSearch(e.target.value);
+  const dispatch = useDispatch();
+
+  const handleSearch = (search) => {
+    dispatch(productActions.setSearch(search));
   };
 
   return (
@@ -14,16 +18,7 @@ const ShopHeader = (props) => {
       className={styles.shopHeader}
       style={!showSideBar ? { width: "100%" } : {}}
     >
-      <div className={styles.search}>
-        <input
-          type="text"
-          name="dashboard-search"
-          id="dashboard-search"
-          placeholder="Search by name, email, domain, or phone number"
-          onChange={hanldeSearch}
-        />
-        <BiSearchAlt2 />
-      </div>
+      <SearchBar placeholder="Search products" onSearch={handleSearch} />
       <div className={styles.btnMessage}>
         <div className={styles.messageIcon}>
           <MdMessage />

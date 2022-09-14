@@ -5,6 +5,7 @@ const productSlice = createSlice({
   initialState: {
     products: [],
     reloadProducts: false,
+    search: "",
   },
   reducers: {
     setProducts(state, action) {
@@ -12,6 +13,9 @@ const productSlice = createSlice({
     },
     reloadProducts(state) {
       state.reloadProducts = !state.reloadProducts;
+    },
+    setSearch(state, action) {
+      state.search = action.payload;
     },
   },
 });

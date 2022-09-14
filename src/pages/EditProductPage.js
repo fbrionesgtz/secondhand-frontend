@@ -3,6 +3,9 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "../store/product-slice";
 import useHttp from "../hooks/use-http";
+import Card from "../components/UI/Card/Card";
+import { Fragment } from "react";
+import BackButton from "../components/UI/Button/BackButton/BackButton";
 
 const EditProductPage = () => {
   const { sendRequest } = useHttp();
@@ -69,10 +72,23 @@ const EditProductPage = () => {
   };
 
   return (
-    <ProductForm
-      onSubmit={handleOnSubmit}
-      productId={productId ? productId : null}
-    />
+    <Fragment>
+      <BackButton />
+      <Card
+        styles={{
+          width: "32rem",
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translate(-50%, -20%)",
+        }}
+      >
+        <ProductForm
+          onSubmit={handleOnSubmit}
+          productId={productId ? productId : null}
+        />
+      </Card>
+    </Fragment>
   );
 };
 

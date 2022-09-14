@@ -5,6 +5,7 @@ const userSlice = createSlice({
   initialState: {
     user: {},
     userProducts: [],
+    search: "",
   },
   reducers: {
     setUser(state, action) {
@@ -12,6 +13,9 @@ const userSlice = createSlice({
     },
     setUserProducts(state, action) {
       state.userProducts = action.payload;
+    },
+    setSearch(state, action) {
+      state.search = action.payload;
     },
   },
 });

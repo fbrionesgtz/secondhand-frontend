@@ -9,9 +9,7 @@ import EditProductPage from "./pages/EditProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
-import UserProductsPage from "./pages/UserProductsPage";
 import LogInPage from "./pages/LogInPage";
-import { authActions } from "./store/auth-slice";
 import UserDetailsPage from "./pages/UserDetailsPage";
 
 function App() {
@@ -45,15 +43,6 @@ function App() {
         },
         (data) => {
           dispatch(userActions.setUser(data.user));
-          sendRequest(
-            {
-              url: "http://localhost:8080/products",
-              headers: { Authorization: token },
-            },
-            (products) => {
-              dispatch(productActions.setProducts(transformProducts(products)));
-            }
-          );
         }
       );
 
@@ -61,6 +50,16 @@ function App() {
         navigate("/auth/login");
         console.log("your session expired");
       }
+
+      sendRequest(
+        {
+          url: "http://localhost:8080/products",
+          headers: { Authorization: token },
+        },
+        (products) => {
+          dispatch(productActions.setProducts(transformProducts(products)));
+        }
+      );
     } else {
       navigate("/");
       console.log("you must login");
@@ -80,7 +79,6 @@ function App() {
       />
       <Route path="/add-product" element={<EditProductPage />} />
       <Route path="/update-product/:productId" element={<EditProductPage />} />
-      <Route path="/user-products" element={<UserProductsPage />} />
     </Routes>
   );
 }

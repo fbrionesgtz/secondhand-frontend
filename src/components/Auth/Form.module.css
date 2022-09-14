@@ -13,7 +13,9 @@
     margin-top: 1rem;
 }
 
-.control input {
+.control input,
+.control select,
+.control textarea {
     color: #9ca0a1;
     border: 1px solid #9ca0a1;
     width: calc(100% - 4rem);
@@ -23,7 +25,13 @@
     border-radius: 10px;
 }
 
-.control input::placeholder {
+.control select {
+    width: calc(100% - 1rem);
+}
+
+.control input::placeholder,
+.control select::placeholder,
+.control textarea::placeholder {
     color: #9ca0a1;
 }
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import ProductList from "../Products/ProductList/ProductList";
 import styles from "./Shop.module.css";
@@ -6,22 +5,20 @@ import ShopHeader from "./ShopHeader/ShopHeader";
 
 const Shop = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (search) => {
-    setSearch(search);
-  };
+  const products = useSelector((state) => state.product.products);
+  const search = useSelector((state) => state.product.search);
 
   return (
     <section
       className={styles.shop}
       style={!showSideBar ? { width: "100%", left: "0" } : {}}
     >
-      <ShopHeader onSearch={handleSearch} />
+      <ShopHeader />
       <ProductList
+        products={products}
+        search={search}
         isLoading={props.isLoading}
         error={props.error}
-        search={search}
       />
     </section>
   );

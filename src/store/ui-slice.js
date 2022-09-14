@@ -4,6 +4,7 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: {
     isSideBarShown: true,
+    isUserContactShown: false,
   },
   reducers: {
     showSideBar(state) {
@@ -11,6 +12,12 @@ const uiSlice = createSlice({
     },
     hideSideBar(state) {
       state.isSideBarShown = false;
+    },
+    showUserContact(state) {
+      state.isUserContactShown = true;
+    },
+    hideUserContact(state) {
+      state.isUserContactShown = false;
     },
   },
 });
