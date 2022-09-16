@@ -49,7 +49,6 @@ function App() {
 
       if (error) {
         navigate("/auth/login");
-        console.log("your session expired");
       }
 
       sendRequest(
@@ -61,9 +60,18 @@ function App() {
           dispatch(productActions.setProducts(transformProducts(products)));
         }
       );
+
+      sendRequest(
+        {
+          url: "http://localhost:8080/products/user-products",
+          headers: { Authorization: token },
+        },
+        (products) => {
+          dispatch(userActions.setUserProducts(products["products"]));
+        }
+      );
     } else {
       navigate("/");
-      console.log("you must login");
     }
   }, [sendRequest, reloadProducts, token]);
 

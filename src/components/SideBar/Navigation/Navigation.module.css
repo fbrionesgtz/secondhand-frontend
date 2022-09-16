@@ -65,6 +65,7 @@
 
 .price {
     display: grid!important;
+    padding-left: 0.5rem!important;
     padding-right: 0.5rem!important;
     grid-template-columns: 45% 5% 45%;
     gap: 0.5rem!important;
@@ -74,7 +75,7 @@
 
 .price input {
     color: #9ca0a1;
-    width: 45%;
+    width: 60%;
     border: 1px solid #9ca0a1;
     background-color: #eaf0f3;
     padding: 0.5rem 1rem;
@@ -82,11 +83,15 @@
 }
 
 @media only screen and (max-height: 800px) {
+    .nav li:first-child {
+        padding-block: 0.8rem;
+    }
+
     .nav li {
-        padding: 0.5rem 0 0.5rem 0.5rem;
+        padding-block: 0.6rem;
     }
 
     .nav svg {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }

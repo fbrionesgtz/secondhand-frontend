@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Product from "../components/Products/Product/Product";
 
 const productSlice = createSlice({
   name: "product",
@@ -51,6 +52,14 @@ const productSlice = createSlice({
           (category) => category !== action.payload.category
         );
       }
+
+      if (action.payload.min) {
+        state.filters.priceRange.min = null;
+      }
+
+      if (action.payload.max) {
+        state.filters.priceRange.max = null;
+      }
     },
     clearAllFilters(state) {
       state.filters = {
@@ -61,6 +70,9 @@ const productSlice = createSlice({
         categories: [],
       };
     },
+  },
+  getSingleProduct(state, action) {
+    return state.products.find((p) => (p._id = action.payload));
   },
 });
 

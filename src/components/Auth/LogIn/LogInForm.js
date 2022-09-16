@@ -40,6 +40,7 @@ const LogInForm = () => {
       <h1>Sign in</h1>
       <form onSubmit={handleLogIn}>
         <div className={styles.control}>
+          <label for="email">E-mail</label>
           <input
             type="email"
             id="email"
@@ -49,6 +50,7 @@ const LogInForm = () => {
           />
         </div>
         <div className={styles.control}>
+          <label for="password">Password</label>
           <input
             type="password"
             id="password"

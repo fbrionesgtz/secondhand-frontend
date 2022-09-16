@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import Loader from "../../UI/Loader/Loader";
 import Product from "../Product/Product";
 import styles from "./ProductList.module.css";
-import { VscLoading } from "react-icons/vsc";
 
 const ProductList = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
@@ -39,7 +39,7 @@ const ProductList = (props) => {
       }
     >
       {props.error && <p>Something went wrong</p>}
-      {props.isLoading && <VscLoading className={styles.loader} />}
+      {props.isLoading && <Loader />}
       {props.products
         .filter((p) => {
           const minPrice = props.filters.priceRange

@@ -15,10 +15,9 @@ const Product = (props) => {
           }}
         />
       </div>
-      <div>
-        <p>{`$${props.price}`}</p>
-        <h1>{props.title}</h1>
-        <p>{props.category}</p>
+      <div className={styles.productContent}>
+        <h1>{`$${props.price}`}</h1>
+        <p>{props.title}</p>
       </div>
     </div>
   );

@@ -50,6 +50,7 @@ const SignUpForm = () => {
       <h1>Create an account</h1>
       <form onSubmit={handleSignUp}>
         <div className={styles.control}>
+          <label for="image">Profile picture</label>
           <input
             type="file"
             id="image"
@@ -59,6 +60,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={`${styles.control} ${styles.block}`}>
+          <label for="firstName">First name</label>
           <input
             type="text"
             id="firstName"
@@ -67,7 +69,8 @@ const SignUpForm = () => {
             placeholder="Enter first name"
           />
         </div>
-        <div className={`${styles.control} ${styles.alignEnd}`}>
+        <div className={`${styles.control} ${styles.block} ${styles.alignEnd}`}>
+          <label for="lastName">Last name</label>
           <input
             type="text"
             id="lastName"
@@ -77,6 +80,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={styles.control}>
+          <label for="phoneNumber">Phone number</label>
           <input
             type="phone"
             id="phoneNumber"
@@ -86,6 +90,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={styles.control}>
+          <label for="email">E-mail</label>
           <input
             type="email"
             id="email"
@@ -95,6 +100,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={styles.control}>
+          <label for="password">Password</label>
           <input
             type="password"
             id="password"
@@ -104,6 +110,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={styles.control}>
+          <label for="password">Confirm password</label>
           <input
             type="password"
             id="password"

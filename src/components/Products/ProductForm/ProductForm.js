@@ -72,6 +72,7 @@ const ProductForm = (props) => {
         onSubmit={handleSubmit}
       >
         <div className={styles.control}>
+          <label for="title">Title</label>
           <input
             type="text"
             id="title"
@@ -82,6 +83,7 @@ const ProductForm = (props) => {
           />
         </div>
         <div className={styles.control}>
+          <label for="category">Category</label>
           <select
             id="category"
             name="category"
@@ -89,6 +91,7 @@ const ProductForm = (props) => {
             ref={categoryRef}
             defaultValue={productId ? productToUpdate.category : null}
           >
+            <option value="">Categories</option>
             <option value="Vehicles">Vehicles</option>
             <option value="Clothing">Clothing</option>
             <option value="Electronics">Electronics</option>
@@ -100,6 +103,7 @@ const ProductForm = (props) => {
           </select>
         </div>
         <div className={styles.control}>
+          <label for="price">Price</label>
           <input
             type="number"
             min="0"
@@ -112,6 +116,7 @@ const ProductForm = (props) => {
           />
         </div>
         <div className={styles.control}>
+          <label for="image">Product picture</label>
           <input
             type="file"
             id="image"
@@ -120,6 +125,7 @@ const ProductForm = (props) => {
           />
         </div>
         <div className={styles.control}>
+          <label for="description">Description</label>
           <textarea
             id="description"
             name="description"

@@ -26,10 +26,10 @@
 
 .secondary {
     font-size: 1em;
-    font-weight: 600;
+    font-weight: 300;
     cursor: pointer;
     background-color: transparent;
-    border: 2px solid #019765;
+    border: 1px solid #019765;
     border-radius: 15px;
     color: #019765;
     padding: 0.8rem 1rem;
