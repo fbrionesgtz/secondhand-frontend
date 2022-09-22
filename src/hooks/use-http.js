@@ -25,7 +25,8 @@ const useHttp = () => {
       }
 
       if (!response.ok) {
-        throw new Error("Request failed!");
+        const error = await response.json();
+        throw new Error(error.message);
       }
 
       const data = await response.json();

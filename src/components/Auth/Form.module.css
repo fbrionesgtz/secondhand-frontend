@@ -35,12 +35,20 @@
     color: #9ca0a1;
 }
 
-.control input:focus {
+.control input:focus,
+.control select:focus,
+.control textarea:focus {
     outline-width: 0;
 }
 
 .control label {
     color: #73797a;
+}
+
+.error input,
+.error select,
+.error textarea {
+    border: 1px solid red;
 }
   
 .block {

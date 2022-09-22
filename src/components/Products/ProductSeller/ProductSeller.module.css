@@ -1,0 +1,48 @@
+.sellerContainter {
+    margin-top: 1rem;
+}
+
+.sellerContainter p {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.seller {
+    display: flex;
+    gap: 1rem;
+}
+
+.sellerImg {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.sellerImg img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.sellerInfo {
+    margin-block: auto;
+}
+
+.sellerInfo h3 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.contact {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.contact p {
+    font-weight: 400!important;
+    font-size: 1em!important;
+    margin: 0;
+}

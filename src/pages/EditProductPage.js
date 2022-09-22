@@ -2,18 +2,19 @@ import ProductForm from "../components/Products/ProductForm/ProductForm";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "../store/product-slice";
+import { toast } from "react-toastify";
 import useHttp from "../hooks/use-http";
 import Card from "../components/UI/Card/Card";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import BackButton from "../components/UI/Button/BackButton/BackButton";
 
 const EditProductPage = () => {
-  const { sendRequest } = useHttp();
-  const token = useSelector((state) => state.auth.token);
-  const dispatch = useDispatch();
+  const { sendRequest, error } = useHttp();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const { productId } = useParams();
+  const token = useSelector((state) => state.auth.token);
 
   const handlePostProduct = async (product) => {
     const formData = new FormData();
@@ -32,9 +33,18 @@ const EditProductPage = () => {
         },
         formData: formData,
       },
-      () => {
-        dispatch(productActions.reloadProducts());
+      (data) => {
+        dispatch(productActions.addProduct(data.product));
         navigate("/shop");
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     );
   };
@@ -56,12 +66,35 @@ const EditProductPage = () => {
         },
         formData: formData,
       },
-      () => {
-        dispatch(productActions.reloadProducts());
+      (data) => {
+        dispatch(productActions.updateProduct(data.product));
         navigate("/shop");
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     );
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [error]);
 
   const handleOnSubmit = (product) => {
     if (location.pathname.includes("add")) {

@@ -7,6 +7,7 @@ const uiSlice = createSlice({
     isCoverImageHover: false,
     isProfileImageHover: false,
     isUserContactShown: false,
+    deletePrompt: false,
   },
   reducers: {
     showSideBar(state) {
@@ -32,6 +33,12 @@ const uiSlice = createSlice({
     },
     hideUserContact(state) {
       state.isUserContactShown = false;
+    },
+    showDeletePrompt(state) {
+      state.deletePrompt = true;
+    },
+    hideDeletePrompt(state) {
+      state.deletePrompt = false;
     },
   },
 });

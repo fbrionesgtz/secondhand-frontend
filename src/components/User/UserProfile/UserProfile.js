@@ -1,17 +1,26 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Navigate, useParams } from "react-router-dom";
 import { uiActions } from "../../../store/ui-slice";
+import { userActions } from "../../../store/user-slice";
 import useHttp from "../../../hooks/use-http";
 import BackButton from "../../UI/Button/BackButton/BackButton";
 import Modal from "../../UI/Modal/Modal";
-import { MdAddPhotoAlternate, MdEmail, MdPhone } from "react-icons/md";
+import {
+  MdAddPhotoAlternate,
+  MdPhotoSizeSelectActual,
+  MdEmail,
+  MdPhone,
+} from "react-icons/md";
 import { RiImageEditFill, RiContactsFill } from "react-icons/ri";
 import styles from "./UserProfile.module.css";
+import { toast } from "react-toastify";
 
-const UserProfile = () => {
+const UserProfile = (props) => {
   const coverImageRef = useRef();
-  const { sendRequest } = useHttp();
+  const { sendRequest, error } = useHttp();
   const dispatch = useDispatch();
+  const { userId } = useParams();
   const currUser = useSelector((state) => state.user.user);
   const coverImageHover = useSelector((state) => state.ui.isCoverImageHover);
   const profileImageHover = useSelector(
@@ -20,10 +29,30 @@ const UserProfile = () => {
   const showContactInfo = useSelector((state) => state.ui.isUserContactShown);
   const token = useSelector((state) => state.auth.token);
 
+  const validImage = (value) =>
+    value.type === "image/jpeg" ||
+    value.type === "image/jpg" ||
+    value.type === "image/png" ||
+    value.type === "image/webp";
+
   const handleUpdateImage = () => {
     const coverImage = coverImageRef.current.files[0];
 
-    if (coverImage && token) {
+    if (!validImage(coverImage)) {
+      toast.error("Please choose a jpeg, jpg, png, or webp file.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      coverImageRef.current.value = null;
+    }
+
+    if (validImage(coverImage) && token) {
       const formData = new FormData();
       formData.append("image", coverImage);
       sendRequest(
@@ -34,9 +63,35 @@ const UserProfile = () => {
           formData: formData,
         },
         (res) => {
-          console.log(res);
+          dispatch(
+            userActions.setUser({
+              ...currUser,
+              coverImage: res.user.coverImage,
+            })
+          );
+          toast.success("Cover image updated.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       );
+
+      if (error) {
+        toast.error(error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
   };
 
@@ -61,35 +116,45 @@ const UserProfile = () => {
             ref={coverImageRef}
             onChange={handleUpdateImage}
           />
-          {!currUser.coverImage && (
-            <MdAddPhotoAlternate
-              onClick={() => {
-                coverImageRef.current.click();
-              }}
-            />
-          )}
-          {currUser.coverImage && (
-            <Fragment>
-              <div
-                className={styles.img}
-                style={{
-                  backgroundImage: `url(http://localhost:8080/${currUser.coverImage})`,
+          {userId === currUser._id ? (
+            !props.user.coverImage ? (
+              <MdAddPhotoAlternate
+                onClick={() => {
+                  coverImageRef.current.click();
                 }}
               />
-              {coverImageHover && (
-                <RiImageEditFill
-                  onClick={() => {
-                    coverImageRef.current.click();
+            ) : (
+              <Fragment>
+                <div
+                  className={styles.img}
+                  style={{
+                    backgroundImage: `url(http://localhost:8080/${props.user.coverImage})`,
                   }}
                 />
-              )}
-            </Fragment>
+                {coverImageHover && (
+                  <RiImageEditFill
+                    onClick={() => {
+                      coverImageRef.current.click();
+                    }}
+                  />
+                )}
+              </Fragment>
+            )
+          ) : !props.user.coverImage ? (
+            <MdPhotoSizeSelectActual />
+          ) : (
+            <div
+              className={styles.img}
+              style={{
+                backgroundImage: `url(http://localhost:8080/${props.user.coverImage})`,
+              }}
+            />
           )}
         </div>
         <div className={styles.user}>
           <div
             className={styles.profileImage}
-            data-name={`${currUser.firstName} ${currUser.lastName}`}
+            data-name={`${props.user.firstName} ${props.user.lastName}`}
             onMouseEnter={() => {
               dispatch(uiActions.hoverProfileImage());
             }}
@@ -97,7 +162,7 @@ const UserProfile = () => {
               dispatch(uiActions.hoverLeaveProfileImage());
             }}
           >
-            <img src={`http://localhost:8080/${currUser.profileImage}`} />
+            <img src={`http://localhost:8080/${props.user.profileImage}`} />
             {profileImageHover && (
               <RiContactsFill
                 className={styles.contactIcon}
@@ -119,11 +184,11 @@ const UserProfile = () => {
               <div className={styles.userContact}>
                 <div>
                   <MdEmail />
-                  <p>{currUser.email}</p>
+                  <p>{props.user.email}</p>
                 </div>
                 <div>
                   <MdPhone />
-                  <p>{currUser.phoneNumber}</p>
+                  <p>{props.user.phoneNumber}</p>
                 </div>
               </div>
             </div>

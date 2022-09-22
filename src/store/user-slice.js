@@ -14,6 +14,10 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    clearUser(state) {
+      state.user = {};
+      state.userProducts = [];
+    },
     setUserProducts(state, action) {
       state.userProducts = action.payload;
     },

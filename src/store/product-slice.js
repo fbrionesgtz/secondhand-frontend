@@ -5,7 +5,7 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
-    reloadProducts: false,
+    owner: {},
     search: "",
     filters: {
       priceRange: {
@@ -19,8 +19,20 @@ const productSlice = createSlice({
     setProducts(state, action) {
       state.products = action.payload;
     },
-    reloadProducts(state) {
-      state.reloadProducts = !state.reloadProducts;
+    addProduct(state, action) {
+      state.products.push(action.payload);
+    },
+    updateProduct(state, action) {
+      const productIndex = state.products.findIndex(
+        (p) => p._id === action.payload._id
+      );
+      state.products[productIndex] = action.payload;
+    },
+    clearProducts(state) {
+      state.products = [];
+    },
+    setOwner(state, action) {
+      state.owner = action.payload;
     },
     setSearch(state, action) {
       state.search = action.payload;

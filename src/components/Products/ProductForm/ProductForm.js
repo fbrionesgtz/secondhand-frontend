@@ -1,21 +1,93 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useHttp from "../../../hooks/use-http";
+import useInput from "../../../hooks/use-input";
 import styles from "../../Auth/Form.module.css";
 import Button from "../../UI/Button/Button";
 
 const ProductForm = (props) => {
-  const { sendRequest } = useHttp();
+  const { sendRequest, error } = useHttp();
   const location = useLocation();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const [productToUpdate, setProductToUpdate] = useState({});
-  const titleRef = useRef();
-  const priceRef = useRef();
-  const categoryRef = useRef();
-  const [productImage, setProductImage] = useState();
-  const descriptionRef = useRef();
   const productId = props.productId;
+
+  const isEmpty = (value) => value.trim().length > 0;
+
+  const validImage = (value) =>
+    value.type === "image/jpeg" ||
+    value.type === "image/jpg" ||
+    value.type === "image/png" ||
+    value.type === "image/webp";
+
+  const validPrice = (value) => value && value >= 0;
+
+  const validDescription = (value) => value.trim().length >= 30;
+
+  const {
+    value: productImage,
+    isValid: productImageIsValid,
+    valueInputChangeHandler: productImageChangeHandler,
+  } = useInput(
+    validImage,
+    "Please choose a jpeg, jpg, png, or webp file.",
+    true
+  );
+
+  const {
+    value: title,
+    isValid: titleIsValid,
+    valueInputChangeHandler: titleChangeHandler,
+    valueInputBlurHandler: titleBlurHandler,
+    reset: resetTitle,
+  } = useInput(
+    isEmpty,
+    "Please enter a title.",
+    false,
+    productId && productToUpdate.title
+  );
+
+  const {
+    value: category,
+    isValid: categoryIsValid,
+    valueInputChangeHandler: categoryChangeHandler,
+    valueInputBlurHandler: categoryBlurHandler,
+    reset: resetCategory,
+  } = useInput(
+    isEmpty,
+    "Please select a category.",
+    false,
+    productId && productToUpdate.category
+  );
+
+  const {
+    value: price,
+    isValid: priceIsValid,
+    valueInputChangeHandler: priceChangeHandler,
+    valueInputBlurHandler: priceBlurHandler,
+    reset: resetPrice,
+  } = useInput(
+    validPrice,
+    "Price must be zero or more.",
+    false,
+    productId && productToUpdate.price
+  );
+
+  const {
+    value: description,
+    isValid: descriptionIsValid,
+    valueInputChangeHandler: descriptionChangeHandler,
+    valueInputBlurHandler: descriptionBlurHandler,
+    reset: resetDescription,
+  } = useInput(
+    validDescription,
+    "Description must be at least 30 characters long.",
+    false,
+    productId && productToUpdate.description
+  );
 
   useEffect(() => {
     if (productId) {
@@ -30,32 +102,48 @@ const ProductForm = (props) => {
           setProductToUpdate(data.product);
         }
       );
+
+      if (error) {
+        toast.error(error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
-  }, [sendRequest, productId]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (
+      !titleIsValid ||
+      !categoryIsValid ||
+      !priceIsValid ||
+      !productImageIsValid ||
+      !descriptionIsValid
+    ) {
+      return;
+    }
+
     const product = {
-      title: titleRef.current.value,
-      price: priceRef.current.value,
-      category: categoryRef.current.value,
-      description: descriptionRef.current.value,
+      title: title,
+      price: price,
+      category: category,
+      description: description,
       productImage: productImage,
     };
 
     props.onSubmit(product);
-  };
 
-  const handleProductImageChange = (e) => {
-    if (!productId && e.target.files) {
-      setProductImage(e.target.files[0]);
-    } else if (productId && !e.target.files) {
-      setProductImage(productToUpdate.productImage);
-    } else if (productId && e.target.files) {
-      console.log(e.target.files);
-      setProductImage(e.target.files[0]);
-    }
+    resetTitle();
+    resetCategory();
+    resetPrice();
+    resetDescription();
   };
 
   return (
@@ -66,30 +154,34 @@ const ProductForm = (props) => {
           : location.pathname.includes("update") && "Update Product"}
       </h1>
       <form
-        action="/"
+        action={location.pathname}
         method="POST"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
       >
-        <div className={styles.control}>
-          <label for="title">Title</label>
+        <div className={`${styles.control} ${!titleIsValid && styles.error}`}>
+          <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
             name="title"
-            ref={titleRef}
+            value={title}
+            onChange={titleChangeHandler}
+            onBlur={titleBlurHandler}
             placeholder="Enter title"
-            defaultValue={productId ? productToUpdate.title : null}
           />
         </div>
-        <div className={styles.control}>
-          <label for="category">Category</label>
+        <div
+          className={`${styles.control} ${!categoryIsValid && styles.error}`}
+        >
+          <label htmlFor="category">Category</label>
           <select
             id="category"
             name="category"
             type="select"
-            ref={categoryRef}
-            defaultValue={productId ? productToUpdate.category : null}
+            value={category}
+            onChange={categoryChangeHandler}
+            onBlur={categoryBlurHandler}
           >
             <option value="">Categories</option>
             <option value="Vehicles">Vehicles</option>
@@ -102,36 +194,44 @@ const ProductForm = (props) => {
             <option value="Outdoors">Outdoors</option>
           </select>
         </div>
-        <div className={styles.control}>
-          <label for="price">Price</label>
+        <div className={`${styles.control} ${!priceIsValid && styles.error}`}>
+          <label htmlFor="price">Price</label>
           <input
             type="number"
             min="0"
             step="0.01"
             id="price"
             name="price"
-            ref={priceRef}
+            value={price}
+            onChange={priceChangeHandler}
+            onBlur={priceBlurHandler}
             placeholder="Enter price"
-            defaultValue={productId ? productToUpdate.price : null}
           />
         </div>
-        <div className={styles.control}>
-          <label for="image">Product picture</label>
+        <div
+          className={`${styles.control} ${
+            !productImageIsValid && styles.error
+          }`}
+        >
+          <label htmlFor="image">Product picture</label>
           <input
             type="file"
             id="image"
             name="image"
-            onChange={handleProductImageChange}
+            onChange={productImageChangeHandler}
           />
         </div>
-        <div className={styles.control}>
-          <label for="description">Description</label>
+        <div
+          className={`${styles.control} ${!descriptionIsValid && styles.error}`}
+        >
+          <label htmlFor="description">Description</label>
           <textarea
             id="description"
             name="description"
-            ref={descriptionRef}
+            value={description}
+            onChange={descriptionChangeHandler}
+            onBlur={descriptionBlurHandler}
             placeholder="Enter description"
-            defaultValue={productId ? productToUpdate.description : null}
           />
         </div>
         <Button type="submit" class="primary" content="Submit" />

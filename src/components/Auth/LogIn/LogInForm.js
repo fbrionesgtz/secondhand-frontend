@@ -1,24 +1,49 @@
-import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import useInput from "../../../hooks/use-input";
+import { toast } from "react-toastify";
 import { authActions } from "../../../store/auth-slice";
-import { productActions } from "../../../store/product-slice";
 import useHttp from "../../../hooks/use-http";
 import Button from "../../UI/Button/Button";
 import styles from "../Form.module.css";
+import { useEffect } from "react";
 
 const LogInForm = () => {
-  const { sendRequest, isLoading, error } = useHttp();
+  const { sendRequest, error } = useHttp();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+
+  const validEmail = (value) =>
+    value
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+
+  const isEmpty = (value) => value.trim().length > 0;
+
+  const {
+    value: email,
+    isValid: emailIsValid,
+    valueInputChangeHandler: emailChangeHandler,
+    valueInputBlurHandler: emailBlurHandler,
+    reset: resetEmail,
+  } = useInput(validEmail, "Please enter a valid email address.");
+
+  const {
+    value: password,
+    isValid: passwordIsValid,
+    valueInputChangeHandler: passwordChangeHandler,
+    valueInputBlurHandler: passwordBlurHandler,
+    reset: resetPassword,
+  } = useInput(isEmpty, "Please enter your password.");
 
   const handleLogIn = (e) => {
     e.preventDefault();
 
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    if (!passwordIsValid || !emailIsValid) {
+      return;
+    }
 
     sendRequest(
       {
@@ -29,33 +54,56 @@ const LogInForm = () => {
       },
       (data) => {
         dispatch(authActions.logIn(data.token));
-        dispatch(productActions.reloadProducts);
         navigate("/shop");
+        window.location.reload(false);
       }
     );
+
+    resetEmail();
+    resetPassword();
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Wrong email or password.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [error]);
 
   return (
     <div className={styles.form}>
       <h1>Sign in</h1>
       <form onSubmit={handleLogIn}>
-        <div className={styles.control}>
-          <label for="email">E-mail</label>
+        <div className={`${styles.control} ${!emailIsValid && styles.error}`}>
+          <label htmlFor="email">E-mail</label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
-            ref={emailRef}
+            value={email}
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
             placeholder="Enter email"
           />
         </div>
-        <div className={styles.control}>
-          <label for="password">Password</label>
+        <div
+          className={`${styles.control} ${!passwordIsValid && styles.error}`}
+        >
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
-            ref={passwordRef}
+            value={password}
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
             placeholder="Enter password"
           />
         </div>

@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navigation from "./Navigation/Navigation";
-import SecondhandLogo from "../UI/Logo/SecondhandLogo";
 import { uiActions } from "../../store/ui-slice";
 import { Transition } from "react-transition-group";
 import styles from "./SideBar.module.css";

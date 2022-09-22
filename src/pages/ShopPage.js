@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { ToastContainer } from "react-toastify";
 import Shop from "../components/Shop/Shop";
 import SideBar from "../components/SideBar/SideBar";
 

@@ -16,7 +16,7 @@ import { IoMdPricetags, IoMdPricetag } from "react-icons/io";
 import { BiFilter } from "react-icons/bi";
 import styles from "./Navigation.module.css";
 
-const Nav = (props) => {
+const Nav = () => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.product.filters);
 

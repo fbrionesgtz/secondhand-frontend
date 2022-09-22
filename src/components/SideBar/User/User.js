@@ -10,7 +10,7 @@ const User = () => {
     <div
       className={styles.user}
       onClick={() => {
-        navigate("/user");
+        navigate(`/user/${currentUser._id}`);
       }}
     >
       <div className={styles.userImg}>

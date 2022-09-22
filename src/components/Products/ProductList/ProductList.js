@@ -61,17 +61,74 @@ const ProductList = (props) => {
               ? p.price >= minPrice && p.price <= maxPrice
               : minPrice
               ? p.price >= minPrice
-              : maxPrice && p.price <= maxPrice;
+              : maxPrice
+              ? p.price <= maxPrice
+              : false;
 
-          if (filterBySearch && props.filters.categories.length > 0) {
+          if (
+            filterBySearch &&
+            (minPrice || maxPrice) &&
+            props.filters.categories.length > 0
+          ) {
+            return filterBySearch && filterByCategory && filterByPriceRange;
+          }
+
+          if (
+            filterBySearch &&
+            (minPrice || maxPrice) &&
+            props.filters.categories.length <= 0
+          ) {
+            return filterBySearch && filterByPriceRange;
+          }
+
+          if (
+            filterBySearch &&
+            props.filters.categories.length > 0 &&
+            !minPrice &&
+            !maxPrice
+          ) {
             return filterBySearch && filterByCategory;
           }
 
-          if (minPrice || maxPrice) {
+          if (
+            props.filters.categories.length > 0 &&
+            (minPrice || maxPrice) &&
+            !filterBySearch
+          ) {
+            return filterByPriceRange && filterByCategory;
+          }
+
+          if (
+            filterBySearch &&
+            (minPrice || maxPrice) &&
+            props.filters.categories.length <= 0
+          ) {
+            return filterByPriceRange && filterBySearch;
+          }
+
+          if (
+            props.filters.categories.length > 0 &&
+            !filterBySearch &&
+            !minPrice &&
+            !maxPrice
+          ) {
+            return filterByCategory;
+          }
+
+          if (
+            (minPrice || maxPrice) &&
+            !filterBySearch &&
+            props.filters.categories.length === 0
+          ) {
             return filterByPriceRange;
           }
 
-          if (filterBySearch && props.filters.categories.length === 0) {
+          if (
+            filterBySearch &&
+            props.filters.categories.length === 0 &&
+            !minPrice &&
+            !maxPrice
+          ) {
             return filterBySearch;
           }
         })
