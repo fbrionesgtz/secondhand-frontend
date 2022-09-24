@@ -1,51 +1,50 @@
-.primary {
-    background-color: #019765;
-    border: 2px solid #019765;
-    border-radius: 15px;
-    cursor: pointer;
-    color: white;
-    padding: 0.8rem 1rem;
+.btn {
     font-size: 1em;
-    font-weight: 600;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    border-radius: 15px;
+    text-decoration: none;
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
 
-.primary:disabled {
-    pointer-events: none;
-}
-
-.primary:hover {
+.btn:hover {
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.primary:active {
+.btn:active {
     box-shadow: none;
     transform: translateY(0);
 }
 
+.primary {
+    background-color: #019765;
+    border: 2px solid #019765;
+    color: white;
+    font-weight: 600;
+}
+
 .secondary {
-    font-size: 1em;
     font-weight: 300;
-    cursor: pointer;
     background-color: transparent;
     border: 1px solid #019765;
-    border-radius: 15px;
     color: #019765;
-    padding: 0.8rem 1rem;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
 
 .secondary:hover {
     color: white;
     background-color: #019765;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
 }
 
-.secondary:active {
-    box-shadow: none;
-    transform: translateY(0);
+.ghost {
+    font-weight: 300;
+    background-color: transparent;
+    border: none;
+    color: #019765;
 }
 
+
+.ghost:hover {
+    color: white;
+    background-color: #019765;
+}

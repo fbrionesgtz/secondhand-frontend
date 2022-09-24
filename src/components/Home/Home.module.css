@@ -1,10 +1,23 @@
+.home {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
 .content {
     position: absolute;
-    top: 20%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, -50%);
     width: 50vw;
     color: white;
+    z-index: 100;
 }
 
 .content h1 {

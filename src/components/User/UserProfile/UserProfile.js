@@ -1,6 +1,6 @@
 import { Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { uiActions } from "../../../store/ui-slice";
 import { userActions } from "../../../store/user-slice";
 import useHttp from "../../../hooks/use-http";

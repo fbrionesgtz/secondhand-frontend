@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
+    showLearnMore: false,
     isSideBarShown: false,
     isCoverImageHover: false,
     isProfileImageHover: false,
@@ -10,6 +11,9 @@ const uiSlice = createSlice({
     deletePrompt: false,
   },
   reducers: {
+    showLearnMore(state) {
+      state.showLearnMore = true;
+    },
     showSideBar(state) {
       state.isSideBarShown = true;
     },

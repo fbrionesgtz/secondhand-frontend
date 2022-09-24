@@ -8,20 +8,6 @@ const ProductList = (props) => {
   const showSideBar = useSelector((state) => state.ui.isSideBarShown);
   const location = useLocation();
   const navigate = useNavigate();
-  let screenWidth = window.innerWidth;
-
-  const gridStyles =
-    screenWidth <= 1900 && screenWidth > 1830
-      ? "repeat(6, 15rem)"
-      : screenWidth <= 1830 && screenWidth > 1500
-      ? "repeat(5, 15rem)"
-      : screenWidth <= 1500 && screenWidth > 1300
-      ? "repeat(4, 15rem)"
-      : screenWidth <= 1300 && screenWidth > 1190
-      ? "repeat(3, 15rem)"
-      : screenWidth <= 1190 && screenWidth > 760
-      ? "repeat(2, 15rem)"
-      : "repeat(1, 15rem)";
 
   const handleProductClick = (prodId) => {
     navigate(`/shop/${prodId}`);
@@ -30,13 +16,7 @@ const ProductList = (props) => {
   return (
     <div
       className={styles.productListGrid}
-      style={
-        !showSideBar && location.pathname.includes("shop")
-          ? { gridTemplateColumns: `${gridStyles}` }
-          : location.pathname.includes("user")
-          ? { marginTop: "0" }
-          : {}
-      }
+      style={location.pathname.includes("user") ? { marginTop: "0" } : {}}
     >
       {props.error && <p>Something went wrong</p>}
       {props.isLoading && <Loader />}
@@ -48,6 +28,7 @@ const ProductList = (props) => {
           const maxPrice = props.filters.priceRange
             ? props.filters.priceRange.max
             : null;
+
           const filterBySearch = p.title
             .toLowerCase()
             .includes(props.search.toLowerCase());
@@ -65,72 +46,19 @@ const ProductList = (props) => {
               ? p.price <= maxPrice
               : false;
 
-          if (
-            filterBySearch &&
-            (minPrice || maxPrice) &&
-            props.filters.categories.length > 0
-          ) {
+          if ((minPrice || maxPrice) && props.filters.categories.length > 0) {
             return filterBySearch && filterByCategory && filterByPriceRange;
           }
 
-          if (
-            filterBySearch &&
-            (minPrice || maxPrice) &&
-            props.filters.categories.length <= 0
-          ) {
-            return filterBySearch && filterByPriceRange;
+          if (props.filters.categories.length > 0 && !minPrice && !maxPrice) {
+            return filterByCategory && filterBySearch;
           }
 
-          if (
-            filterBySearch &&
-            props.filters.categories.length > 0 &&
-            !minPrice &&
-            !maxPrice
-          ) {
-            return filterBySearch && filterByCategory;
-          }
-
-          if (
-            props.filters.categories.length > 0 &&
-            (minPrice || maxPrice) &&
-            !filterBySearch
-          ) {
-            return filterByPriceRange && filterByCategory;
-          }
-
-          if (
-            filterBySearch &&
-            (minPrice || maxPrice) &&
-            props.filters.categories.length <= 0
-          ) {
+          if ((minPrice || maxPrice) && props.filters.categories.length === 0) {
             return filterByPriceRange && filterBySearch;
           }
 
-          if (
-            props.filters.categories.length > 0 &&
-            !filterBySearch &&
-            !minPrice &&
-            !maxPrice
-          ) {
-            return filterByCategory;
-          }
-
-          if (
-            (minPrice || maxPrice) &&
-            !filterBySearch &&
-            props.filters.categories.length === 0
-          ) {
-            return filterByPriceRange;
-          }
-
-          if (
-            filterBySearch &&
-            props.filters.categories.length === 0 &&
-            !minPrice &&
-            !maxPrice
-          ) {
-            return filterBySearch;
-          }
+          return filterBySearch;
         })
         .map((p) => (
           <Product

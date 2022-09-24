@@ -7,6 +7,7 @@ import useHttp from "../hooks/use-http";
 import Card from "../components/UI/Card/Card";
 import { Fragment, useEffect } from "react";
 import BackButton from "../components/UI/Button/BackButton/BackButton";
+import { userActions } from "../store/user-slice";
 
 const EditProductPage = () => {
   const { sendRequest, error } = useHttp();
@@ -35,6 +36,7 @@ const EditProductPage = () => {
       },
       (data) => {
         dispatch(productActions.addProduct(data.product));
+        dispatch(userActions.addUserProduct(data.product));
         navigate("/shop");
         toast.success(data.message, {
           position: "top-right",
@@ -49,7 +51,7 @@ const EditProductPage = () => {
     );
   };
 
-  const handleUpdatePost = async (product) => {
+  const handleUpdateProduct = async (product) => {
     const formData = new FormData();
     formData.append("title", product.title);
     formData.append("category", product.category);
@@ -100,7 +102,7 @@ const EditProductPage = () => {
     if (location.pathname.includes("add")) {
       handlePostProduct(product);
     } else if (location.pathname.includes("update")) {
-      handleUpdatePost(product);
+      handleUpdateProduct(product);
     }
   };
 

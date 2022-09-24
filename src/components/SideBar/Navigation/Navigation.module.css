@@ -83,6 +83,16 @@
 }
 
 @media only screen and (max-height: 800px) {
+    .nav li {
+        padding-block: 0.9rem;
+    }
+
+    .nav svg {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-height: 700px) {
     .nav li:first-child {
         padding-block: 0.8rem;
     }

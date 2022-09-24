@@ -19,11 +19,11 @@ const ShopHeader = (props) => {
       style={!showSideBar ? { width: "100%" } : {}}
     >
       <SearchBar placeholder="Search products" onSearch={handleSearch} />
-      <div className={styles.btnMessage}>
+      {/* <div className={styles.btnMessage}>
         <div className={styles.messageIcon}>
           <MdMessage />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,0 +1,17 @@
+.learnMoreCard {
+    background-color: rgb(48, 48, 48);
+    min-width: 15rem;
+    min-height: 15rem;
+    border-radius: 15px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50%);
+    transition: all 300ms ease-out;
+}
+
+.learnMoreCard:hover {
+    background-color: rgb(43, 43, 43);
+    transform: scale(1.01)!important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+}
+

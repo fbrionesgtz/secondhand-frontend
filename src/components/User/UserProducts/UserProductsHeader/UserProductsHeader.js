@@ -23,7 +23,7 @@ const UserProductsHeader = () => {
   return (
     <div>
       <div className={styles.userProductsHeader}>
-        <SearchBar placeholder="Search my products" onSearch={handleSearch} />
+        <SearchBar placeholder="Search products" onSearch={handleSearch} />
         <div className={styles.categories}>
           <select
             id="select-categories"

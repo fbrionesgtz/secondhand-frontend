@@ -120,6 +120,18 @@ const ProductForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!productImage) {
+      return toast.error("No image provided.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
     if (
       !titleIsValid ||
       !categoryIsValid ||

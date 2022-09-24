@@ -1,12 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useHttp from "../../../hooks/use-http";
 import Loader from "../../UI/Loader/Loader";
 import Button from "../../UI/Button/Button";
 import BackButton from "../../UI/Button/BackButton/BackButton";
 import styles from "./ProductDetails.module.css";
 import { uiActions } from "../../../store/ui-slice";
+import { productActions } from "../../../store/product-slice";
 import Modal from "../../UI/Modal/Modal";
 import ProductSeller from "../ProductSeller/ProductSeller";
 
@@ -19,6 +21,7 @@ const ProductDetails = (props) => {
   const showDeletePrompt = useSelector((state) => state.ui.deletePrompt);
   const [product, setProduct] = useState({});
   const [productSeller, setProductSeller] = useState({});
+  const isCurrUserSeller = userProducts.find((p) => p._id === product._id);
 
   useEffect(() => {
     if (props.productId && !product._id) {
@@ -61,7 +64,7 @@ const ProductDetails = (props) => {
         }
       );
     }
-  }, [props.productId, sendRequest]);
+  }, []);
 
   const handleDeleteProduct = (productId) => {
     sendRequest(
@@ -72,15 +75,37 @@ const ProductDetails = (props) => {
           Authorization: token,
         },
       },
-      () => {
+      (data) => {
+        dispatch(productActions.deleteProduct(productId));
+        dispatch(uiActions.hideDeletePrompt());
         navigate("/shop");
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     );
   };
 
+  useEffect(() => {
+    toast.error(error, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }, [error]);
+
   return (
     <Fragment>
-      {error && <p>Something went wrong.</p>}
       {isLoading && <Loader />}
       {!isLoading && !error && (
         <section className={styles.productDetails}>
@@ -97,7 +122,6 @@ const ProductDetails = (props) => {
           </div>
           <div className={styles.productContent}>
             <h1>{product.title}</h1>
-            <hr />
             <div>
               <p>Price</p>
               <p>{`$${product.price}`}</p>
@@ -119,7 +143,7 @@ const ProductDetails = (props) => {
                 phoneNumber={productSeller.phoneNumber}
               />
             )}
-            {userProducts.find((p) => p._id === product._id) && (
+            {isCurrUserSeller && (
               <div className={styles.actions}>
                 <Button
                   content="Edit Product"
@@ -140,7 +164,7 @@ const ProductDetails = (props) => {
                 />
               </div>
             )}
-            {showDeletePrompt && (
+            {showDeletePrompt && isCurrUserSeller && (
               <Modal>
                 <div className={styles.deletePrompt}>
                   <p>Are you sure you want to delete the product?</p>
