@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { productActions } from "./store/product-slice";
 import { userActions } from "./store/user-slice";
+import { authActions } from "./store/auth-slice";
 import useHttp from "./hooks/use-http";
 import ShopPage from "./pages/ShopPage";
 import EditProductPage from "./pages/EditProductPage";
@@ -14,7 +15,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
 import PageNotFound from "./pages/PageNotFound";
-import { authActions } from "./store/auth-slice";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   const { sendRequest, isLoading, error } = useHttp();
@@ -114,6 +115,7 @@ function App() {
         <Route path="/auth/signup" element={<SignUpPage />} />
         <Route path="/auth/login" element={<LogInPage />} />
         <Route path="/user/:userId" element={<UserDetailsPage />} />
+        <Route path="user/chat" element={<ChatPage />} />
         <Route
           path="/shop"
           element={<ShopPage isLoading={isLoading} error={error} />}
