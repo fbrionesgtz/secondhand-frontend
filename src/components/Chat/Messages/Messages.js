@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
+import styles from "./Messages.module.css";
 
 const Messages = () => {
   const { sendRequest, error } = useHttp();
@@ -31,10 +32,20 @@ const Messages = () => {
   }, [recipientId]);
 
   return (
-    <div>
+    <div className={styles.conversation}>
       {convo &&
         convo.messages.map((message) => (
-          <p key={message._id}>{message.content}</p>
+          <div className={styles.messageContainer} key={message._id}>
+            <div
+              className={`${styles.message} ${
+                message.sender === recipientId
+                  ? styles.recipient
+                  : styles.sender
+              }`}
+            >
+              <p>{message.content}</p>
+            </div>
+          </div>
         ))}
     </div>
   );

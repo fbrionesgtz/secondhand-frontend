@@ -1,0 +1,25 @@
+.chatForm {
+    position: fixed;
+    bottom: 0;
+    left: 30%;
+    width: calc(70% - 2rem);
+    padding: 1rem;
+    background-color: rgb(154 161 167 / 21%);
+}
+
+.chatForm input {
+    width: 85%;
+    background-color: white;
+    margin: 0;
+}
+
+.chatForm button {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.chatForm button:hover {
+    transform: translateY(-50%);
+}

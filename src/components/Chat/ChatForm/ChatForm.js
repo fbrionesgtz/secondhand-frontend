@@ -2,12 +2,21 @@ import Button from "../../UI/Button/Button";
 import useInput from "../../../hooks/use-input";
 import useHttp from "../../../hooks/use-http";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
+import { IoSend } from "react-icons/io5";
+import styles from "./ChatForm.module.css";
+import formStyles from "../../Auth/Form.module.css";
 
 const ChatForm = () => {
   const { sendRequest, error } = useHttp();
+  const [params, setParams] = useSearchParams();
   const token = useSelector((state) => state.auth.token);
-
   const isEmpty = (value) => value.trim().length > 0;
+
+  const recipientId = useMemo(() => {
+    return params.get("id");
+  }, [params]);
 
   const {
     value: message,
@@ -26,7 +35,7 @@ const ChatForm = () => {
 
     sendRequest(
       {
-        url: "http://localhost:8080/messages/send/631a4fb965cb9d94793272ce",
+        url: `http://localhost:8080/messages/send/${recipientId}`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,16 +52,23 @@ const ChatForm = () => {
   };
 
   return (
-    <div>
+    <div className={styles.chatForm}>
       <form onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          placeholder="Enter message"
-          value={message}
-          onChange={messageChangeHandler}
-          onBlur={messageBlurHandler}
+        <div className={formStyles.control}>
+          <input
+            type="text"
+            placeholder="Enter message"
+            value={message}
+            onChange={messageChangeHandler}
+            onBlur={messageBlurHandler}
+          />
+        </div>
+        <Button
+          content={<IoSend />}
+          styles={{ padding: "0.5rem" }}
+          class="primary"
+          type="submit"
         />
-        <Button content="Send" class="primary" type="submit" />
       </form>
     </div>
   );

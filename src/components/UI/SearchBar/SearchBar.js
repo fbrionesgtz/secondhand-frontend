@@ -7,7 +7,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className={styles.search}>
+    <div className={styles.search} style={{ ...props.styles }}>
       <input
         type="text"
         name="dashboard-search"
