@@ -1,5 +1,6 @@
 import { MdEmail, MdPhone } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { MdMessage } from "react-icons/md";
 import styles from "./ProductSeller.module.css";
 
 const ProductSeller = (props) => {
@@ -19,6 +20,10 @@ const ProductSeller = (props) => {
         </div>
         <div className={styles.sellerInfo}>
           <h3>{props.name}</h3>
+          <div className={styles.contact}>
+            <MdMessage />
+            <Link to={`/user/chat?id=${props._id}`}>Send a message</Link>
+          </div>
           <div className={styles.contact}>
             <MdEmail />
             <p>{props.email}</p>

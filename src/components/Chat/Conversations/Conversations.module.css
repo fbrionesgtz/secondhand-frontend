@@ -1,0 +1,14 @@
+.conversations {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100vh;
+    overflow-y: scroll;
+    box-shadow: 4px 0 6px -2px #80808063;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.conversations::-webkit-scrollbar { 
+    display: none;
+}

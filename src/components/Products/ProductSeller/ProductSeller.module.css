@@ -41,7 +41,10 @@
     margin-bottom: 0.3rem;
 }
 
-.contact p {
+.contact p,
+.contact a {
+    text-decoration: none;
+    color: #333;
     font-weight: 400!important;
     font-size: 1em!important;
     margin: 0;

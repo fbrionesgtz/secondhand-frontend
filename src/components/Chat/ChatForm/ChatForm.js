@@ -1,15 +1,17 @@
 import Button from "../../UI/Button/Button";
 import useInput from "../../../hooks/use-input";
 import useHttp from "../../../hooks/use-http";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { convoActions } from "../../../store/convo-slice";
 import { IoSend } from "react-icons/io5";
 import styles from "./ChatForm.module.css";
 import formStyles from "../../Auth/Form.module.css";
 
 const ChatForm = () => {
   const { sendRequest, error } = useHttp();
+  const dispatch = useDispatch();
   const [params, setParams] = useSearchParams();
   const token = useSelector((state) => state.auth.token);
   const isEmpty = (value) => value.trim().length > 0;
@@ -22,7 +24,6 @@ const ChatForm = () => {
     value: message,
     isValid: messageIsValid,
     valueInputChangeHandler: messageChangeHandler,
-    valueInputBlurHandler: messageBlurHandler,
     reset: resetMessage,
   } = useInput(isEmpty, "Please enter a message");
 
@@ -41,10 +42,10 @@ const ChatForm = () => {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: { message },
+        body: { message, sentAt: Date.now() },
       },
       (data) => {
-        console.log(data);
+        dispatch(convoActions.addMessage(data.message));
       }
     );
 
@@ -60,12 +61,11 @@ const ChatForm = () => {
             placeholder="Enter message"
             value={message}
             onChange={messageChangeHandler}
-            onBlur={messageBlurHandler}
           />
         </div>
         <Button
           content={<IoSend />}
-          styles={{ padding: "0.5rem" }}
+          styles={{ height: "2em", width: "2rem" }}
           class="primary"
           type="submit"
         />

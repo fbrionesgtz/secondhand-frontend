@@ -5,7 +5,6 @@ const userSlice = createSlice({
   initialState: {
     user: {},
     userProducts: [],
-    userConvos: [],
     search: "",
     filters: {
       categories: [],
@@ -24,9 +23,6 @@ const userSlice = createSlice({
     },
     addUserProduct(state, action) {
       state.userProducts.push(action.payload);
-    },
-    setUserConvos(state, action) {
-      state.userConvos = action.payload;
     },
     setSearch(state, action) {
       state.search = action.payload;

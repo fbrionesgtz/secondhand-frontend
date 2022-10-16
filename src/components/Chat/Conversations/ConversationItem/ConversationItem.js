@@ -1,9 +1,9 @@
-import styles from "./Conversation.module.css";
+import styles from "./ConversationItem.module.css";
 
 const Conversation = (props) => {
   return (
     <div
-      className={styles.conversation}
+      className={`${styles.conversation} ${props.active && styles.active}`}
       onClick={props.onLoadConvo.bind(null, props.user._id)}
     >
       <div className={styles.userImg}>
